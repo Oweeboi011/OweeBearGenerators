@@ -1,0 +1,56 @@
+{
+  "name": "generator-avanade",
+  "version": "1.0.0",
+  "description": "Test Generator",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "srv": "npm run build && npm run start"
+  },
+  "dependencies": {
+    "@microsoft/decorators": "1.8.0",
+    "@microsoft/sp-application-base": "1.8.0",
+    "@microsoft/sp-core-library": "1.8.0",
+    "@microsoft/sp-dialog": "1.8.0",
+    "@microsoft/sp-http": "^1.8.1",
+    "@microsoft/sp-listview-extensibility": "1.8.0",
+    "@microsoft/sp-loader": "^1.8.0",
+    "@microsoft/sp-lodash-subset": "^1.8.0",
+    "@microsoft/sp-odata-types": "^1.8.1",
+    "@microsoft/sp-office-ui-fabric-core": "1.8.0",
+    "@microsoft/sp-property-pane": "1.8.0",
+    "@microsoft/sp-webpart-base": "1.8.0",
+    "@pnp/common": "^1.3.2",
+    "@pnp/logging": "^1.3.2",
+    "@pnp/odata": "^1.3.2",
+    "@pnp/sp": "^1.3.2",
+    "@types/es6-promise": "0.0.33",
+    "@types/jquery": "^3.3.29",
+    "@types/react": "16.4.2",
+    "@types/react-dom": "16.0.5",
+    "@types/webpack-env": "1.13.1",
+    "bootstrap": "^4.3.1",
+    "gulp-spsync-creds": "^2.3.8",
+    "jquery": "^3.3.1",
+    "office-ui-fabric-react": "5.135.0",
+    "popper.js": "^1.14.7",
+    "react": "16.7.0",
+    "react-bootstrap": "^1.0.0-beta.6",
+    "react-dom": "16.7.0",
+    "srv": "0.0.2",
+    "typescript": "^3.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oweeboi011/OweeBearGenerators.git"
+  },
+  "author": "Owee Penaranda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oweeboi011/OweeBearGenerators/issues"
+  },
+  "homepage": "https://github.com/Oweeboi011/OweeBearGenerators#readme"
+}
