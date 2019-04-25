@@ -1,4 +1,4 @@
-import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions, ISPHttpClientBatchOptions, ISPHttpClientBatchCreationOptions, SPHttpClientBatch } from '@microsoft/sp-http'; --UNCOMMENT AFTER
+import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions, ISPHttpClientBatchOptions, ISPHttpClientBatchCreationOptions, SPHttpClientBatch } from '@microsoft/sp-http'; 
 import { Context } from 'react'; 
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IODataList, IODataListItem } from '@microsoft/sp-odata-types'; 
