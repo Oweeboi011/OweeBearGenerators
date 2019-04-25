@@ -1,6 +1,6 @@
 {
   "name": "generator-spfxavapattern",
-  "version": "1.3.0",
+  "version": "1.6.0",
   "description": "Yeoman generator for Avanade test projects",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,8 @@
     "yeoman",
     "generator",
     "oweebear",
-    "spfx-avanade"
+    "spfx-avanade",
+    "spfxavapattern"
   ],
   "dependencies": {
     "@microsoft/decorators": "1.8.0",
@@ -42,12 +43,10 @@
     "react-bootstrap": "^1.0.0-beta.6",
     "react-dom": "16.7.0",
     "srv": "0.0.2",
-    "typescript": "^3.2.4"
+    "typescript": "^3.2.4",
+    "yeoman-generator": "^3.1.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Oweeboi011/OweeBearGenerators.git"
-  },
+  "repository": "yeoman/generator-spfxavapattern",
   "author": "Owee Penaranda",
   "license": "ISC",
   "bugs": {
