@@ -1,6 +1,6 @@
 {
   "name": "generator-spfxavapattern",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "Yeoman generator for Avanade test projects",
   "main": "index.js",
     "files": [
