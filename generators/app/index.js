@@ -1,69 +1,108 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+const Generator = require('yeoman-generator');
+const commandExists = require('command-exists').sync;
+const yosay = require('yosay');
+const mkdirp = require('mkdirp');
+const config = require('./config');
 
+module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+    for (let optionName in config.options) {
+      this.option(optionName, config.options[optionName]);
+    }
+  }
 
-module.exports = yeoman.generators.Base.extend({
-  //Configurations will be loaded here.
-  //Ask for user input
-  prompting: function() {
-    var done = this.async();
-    this.prompt({
-      type: 'input',
-      name: 'name',
-      message: 'Your project name',
-      //Defaults to the project's folder name if the input is skipped
-      default: this.appname
-    }, function(answers) {
-      this.props = answers;
-      this.log(answers.name);
-      done();
-    }.bind(this));
-  },
-  //Writing Logic here
-  writing: {
-    //Copy the configuration files
-    config: function() {
-      this.fs.copyTpl(
-        this.templatePath('_package.json'),
-        this.destinationPath('package.json'), {
-          name: this.props.name
-        }
-      );
-      this.fs.copyTpl(
-        this.templatePath('_gulpfile.js'),
-        this.destinationPath('gulpfile'), {
-          name: this.props.name
-        }
-      );
-    },
+  initializing() {
+    this.pkg = require('../../package.json');
+    this.composeWith(
+      require.resolve(
+        `generator-${this.options['test-framework']}/generators/app`
+      ),
+      {
+        'skip-install': this.options['skip-install']
+      }
+    );
+  }
 
-    app: function() {
-      this.fs.copyTpl(
-        this.templatePath('_server.js'),
-        this.destinationPath('server.js'), {
-          name: this.props.name
-        }
-      );
-      //app logo
-      this.fs.copy(
-        this.templatePath('assets/images/oweebearApps.png'),
-        this.destinationPath('src/assets/images/oweebearApps.png')
-      );
-      this.fs.copy(
-        this.templatePath('assets/scripts/bootstrap.min.js'),
-        this.destinationPath('src/assets/scripts/bootstrap.min.js')
-      );
-      this.fs.copy(
-        this.templatePath('assets/scripts/jquery.min.js'),
-        this.destinationPath('src/assets/scripts/jquery.min.js')
-      );
-      this.fs.copy(
-        this.templatePath('assets/scripts/react-bootstrap.min.js'),
-        this.destinationPath('src/assets/scripts/react-production.min.js')
+  prompting() {
+    if (!this.options['skip-welcome-message']) {
+      this.log(
+        yosay(
+          "Hello! This is Yeoman-Avanade generator. This will include all SPFX-Avanade Pattern for ReactJS"
+        )
       );
     }
-  },
-  install: function() {
-    this.installDependencies();
+
+    return this.prompt(config.prompts).then(answers => {
+      const features = answers.features;
+      const hasFeature = feat => features && features.includes(feat);
+
+      // manually deal with the response, get back and store the results.
+      // we change a bit this way of doing to automatically do this in the self.prompt() method.
+      this.includeSass = hasFeature('includeSass');
+      this.includeBootstrap = hasFeature('includeBootstrap');
+      this.includeSPFXAva = hasFeature('includeSPFXAva');
+      this.includeJQuery = answers.includeJQuery;
+    });
   }
-});
+
+  writing() {
+    const templateData = {
+      appname: this.appname,
+      date: new Date().toISOString().split('T')[0],
+      name: this.pkg.name,
+      version: this.pkg.version,
+      includeSass: this.includeSass,
+      includeBootstrap: this.includeBootstrap,
+      testFramework: this.options['test-framework'],
+      includeJQuery: this.includeJQuery,
+      includeSPFXAva: this.includeSPFXAva
+    };
+
+    const copy = (input, output) => {
+      this.fs.copy(this.templatePath(input), this.destinationPath(output));
+    };
+
+    const copyTpl = (input, output, data) => {
+      this.fs.copyTpl(
+        this.templatePath(input),
+        this.destinationPath(output),
+        data
+      );
+    };
+    // Create extra directories
+    config.dirsToCreate.forEach(item => {
+      mkdirp(item);
+    });
+    // Render Files
+    config.filesToRender.forEach(file => {
+      copyTpl(file.input, file.output, templateData);
+    });
+
+    // Copy Files
+    config.filesToCopy.forEach(file => {
+      copy(file.input, file.output);
+    });
+
+
+
+    // if (this.includeModernizr) {
+    //   copy('modernizr.json', 'modernizr.json');
+    // }
+
+    // let cssFile = `main.${this.includeSass ? 'scss' : 'css'}`;
+    // copyTpl(cssFile, `app/styles/${cssFile}`, templateData);
+  }
+
+  install() {
+  //  const hasYarn = commandExists('yarn');
+    this.installDependencies({
+    //  npm: !hasYarn,
+    //   yarn: hasYarn,
+      bower: false,
+      skipMessage: this.options['skip-install-message'],
+      skipInstall: this.options['skip-install']
+    });
+  }
+};
